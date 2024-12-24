@@ -519,8 +519,12 @@ function findLongestIncreasingSubsequence(/* nums */) {
  *  propagateItemsByPositionIndex([ 'a', 'b', 'c', null ]) => [ 'a', 'b', 'b', 'c', 'c', 'c',  null, null, null, null ]
  *  propagateItemsByPositionIndex([ 1,2,3,4,5 ]) => [ 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5 ]
  */
-function propagateItemsByPositionIndex(/* arr */) {
-  throw new Error('Not implemented');
+function propagateItemsByPositionIndex(arr, index = 0, result = []) {
+  if (index >= arr.length) {
+    return result;
+  }
+  result.push(...Array(index + 1).fill(arr[index]));
+  return propagateItemsByPositionIndex(arr, index + 1, result);
 }
 
 /**
@@ -536,8 +540,14 @@ function propagateItemsByPositionIndex(/* arr */) {
  *    shiftArray(['a', 'b', 'c', 'd'], -1) => ['b', 'c', 'd', 'a']
  *    shiftArray([10, 20, 30, 40, 50], -3) => [40, 50, 10, 20, 30]
  */
-function shiftArray(/* arr, n */) {
-  throw new Error('Not implemented');
+function shiftArray(arr, n) {
+  let numb = n;
+  const len = arr.length;
+  numb %= len;
+  if (numb < 0) {
+    numb += len;
+  }
+  return arr.slice(-numb).concat(arr.slice(0, len - numb));
 }
 
 /**
@@ -553,8 +563,20 @@ function shiftArray(/* arr, n */) {
  *   sortDigitNamesByNumericOrder([ 'nine','eight','nine','eight' ]) => [ 'eight','eight','nine','nine']
  *   sortDigitNamesByNumericOrder([ 'one','one','one','zero' ]) => [ 'zero','one','one','one' ]
  */
-function sortDigitNamesByNumericOrder(/* arr */) {
-  throw new Error('Not implemented');
+function sortDigitNamesByNumericOrder(arr) {
+  const digitNames = [
+    'zero',
+    'one',
+    'two',
+    'three',
+    'four',
+    'five',
+    'six',
+    'seven',
+    'eight',
+    'nine',
+  ];
+  return arr.sort((a, b) => digitNames.indexOf(a) - digitNames.indexOf(b));
 }
 
 /**
@@ -576,8 +598,19 @@ function sortDigitNamesByNumericOrder(/* arr */) {
  *   swapHeadAndTail([]) => []
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
+function swapHeadAndTail(arr) {
+  const n = arr.length;
+  if (n <= 1) {
+    return arr;
+  }
+  if (n % 2 !== 0) {
+    const middleIndex = Math.floor(n / 2);
+    return arr
+      .slice(middleIndex + 1)
+      .concat(arr[middleIndex])
+      .concat(arr.slice(0, middleIndex));
+  }
+  return arr.slice(-n / 2).concat(arr.slice(0, n / 2));
 }
 
 module.exports = {
